@@ -29,10 +29,15 @@ export default class minigameRPS extends Phaser.Scene {
         this.load.spritesheet('kelp', 'assets/kelp.png', { frameWidth: 1000, frameHeight: 1000})
         this.load.spritesheet('claw', 'assets/claw.png', { frameWidth: 1000, frameHeight: 1000})
         this.load.spritesheet('coral', 'assets/coral.png', { frameWidth: 1000, frameHeight: 1000})
+        // this.load.image('cursor', 'assets/cursor.cur')
+        
     }
     create(){
         this.add.image(400, 300, 'bg')
         this.input.on('pointerdown', this.handleGlobalClick, this);
+        //custom cursor
+        this.input.setDefaultCursor('url(assets/cursor.cur), pointer')
+
         //create playing cards
         this.claw = this.add.sprite(200, 300, 'claw').setScale(0.15).setInteractive()
 
@@ -163,8 +168,8 @@ export default class minigameRPS extends Phaser.Scene {
             //console.log('Global click registered!');
         
             
-            // Schedule the re-enabling of clicks after 0.301 seconds 
-            this.time.delayedCall(301, () => {
+            // Schedule the re-enabling of clicks after 0.4 seconds 
+            this.time.delayedCall(400, () => {
                 this.canClick = true;
                 //console.log('Click cooldown finished.');
             }, [], this);
@@ -185,6 +190,7 @@ export default class minigameRPS extends Phaser.Scene {
         if (this.initialTime <= 0) {
             this.timerEvent.destroy(); // Stop the timer
             this.timerText?.setText('Time\'s Up!'); // Display a final message
+            this.canClick = false //remove residuary click permission
         }
     }
 
